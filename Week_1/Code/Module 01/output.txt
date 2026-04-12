@@ -1,0 +1,4 @@
+age is : 30
+Pi is : 3.141600
+initial is : h
+Other char is : C
