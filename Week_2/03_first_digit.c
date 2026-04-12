@@ -24,17 +24,43 @@ Second Example :
 In 3569 the first digit is 3 and its ODD.
 */
 
+// ✅ Solve 1
 #include<stdio.h>
-
+ 
 int main(){
-    int a = 0;
-    scanf("%d", &a);
-    
-    int first_digit = a / 1000;
-    if( first_digit % 2 ==0){
+    int a , res = 0;
+    scanf("%d %d", &a , &res);
+    res = a / 1000;
+    if( res % 2 ==0){
         printf("EVEN");
     }else{
         printf("ODD");
     }
     return 0;
 }
+
+// ✅ Solve 2 🔥
+#include<stdio.h>
+ 
+int main(){
+    
+    int a = 0;
+ 
+    scanf("%d", &a);
+    
+    if( (a / 1000) % 2 == 0 ){
+       printf("EVEN");
+    }else{
+       printf("ODD");
+    }
+ 
+    return 0;
+}
+
+
+/*
+
+
+
+
+*/
