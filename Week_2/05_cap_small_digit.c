@@ -31,6 +31,8 @@ Note
 ** recommended to read this to know more about ASCII Code https://www.javatpoint.com/ascii.
 */
 
+/* ✅ Own approach 
+
 #include<stdio.h>
 
 int main(){
@@ -47,6 +49,28 @@ int main(){
     {
         printf("ALPHA\n");
         if(ch>= 'a' && ch<= 'z'){
+            printf("IS SMALL");
+        }else{
+            printf("IS CAPITAL");
+        }
+    }
+
+    return 0;
+}
+    */
+
+#include<stdio.h>
+
+int main(){
+    
+    char ch = '1';
+    scanf("%c", &ch);
+
+    if(ch >= '0' && ch <= '9'){
+        printf("IS DIGIT");
+    }else{
+        printf("ALPHA\n");
+        if( ch >= 'a' && ch<= 'z'){
             printf("IS SMALL");
         }else{
             printf("IS CAPITAL");
