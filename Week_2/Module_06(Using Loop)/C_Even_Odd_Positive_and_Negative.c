@@ -14,8 +14,8 @@ int main(){
    {
     scanf("%d", &x);
     // printf("%d ",x);
-       if(x % 2 == 0){
-        ++even;
+    if(x % 2 == 0){
+        even++;
     }
    if(x % 2 != 0)
     {
@@ -35,3 +35,4 @@ int main(){
 
     return 0;
 }
+
