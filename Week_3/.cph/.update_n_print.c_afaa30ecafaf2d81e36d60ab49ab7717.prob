@@ -1,0 +1,1 @@
+{"name":"Local: update_n_print","url":"c:\\Users\\ACER\\OneDrive\\Desktop\\DSA\\Week_3\\update_n_print.c","tests":[{"id":1776681494422,"input":"5\n10 20 30 40 50\n1 100\n","output":"50 40 30 100 10 \n"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\ACER\\OneDrive\\Desktop\\DSA\\Week_3\\update_n_print.c","group":"local","local":true}
