@@ -1,0 +1,70 @@
+.hero-right {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+/* GROUP container */
+.image-group {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  padding: 40px;
+
+  opacity: 0;
+  transform: scale(1.08);
+  transition: opacity 1s ease, transform 1.5s ease;
+
+  z-index: 1;
+}
+
+/* ACTIVE group */
+.image-group.active {
+  opacity: 1;
+  transform: scale(1);
+  z-index: 2;
+}
+
+/* EACH IMAGE */
+.image-group img {
+  width: 45%;
+  height: 80%;
+  object-fit: cover;
+  border-radius: 12px;
+  transition: transform 1.5s ease;
+}
+
+/* subtle tilt */
+.image-group img:first-child {
+  transform: rotate(-3deg);
+}
+
+.image-group img:last-child {
+  transform: rotate(3deg);
+}
+
+/* OPTIONAL: smooth reset during animation */
+.image-group.active img {
+  transform: rotate(0deg) scale(1.02);
+}
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.hero {
+  height: 100vh;
+  background: #000;
+  color: #fff;
+}
+
+.hero-inner {
+  display: flex;
+  height: 100%;
+}

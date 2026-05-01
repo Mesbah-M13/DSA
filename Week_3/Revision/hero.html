@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Stacked Card Hero</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.hero {
+  height: 100vh;
+  display: flex;
+  background: #0a0a0a; /* Dark background like reference */
+  color: #fff;
+  overflow: hidden;
+}
+
+/* LEFT SIDE */
+.hero-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px;
+  z-index: 10;
+}
+
+.hero-left h1 {
+  font-size: 64px;
+  margin-bottom: 16px;
+  line-height: 1.1;
+}
+
+.btn {
+  display: inline-block;
+  padding: 14px 28px;
+  background: #fff;
+  color: #000;
+  border-radius: 30px;
+  text-decoration: none;
+  width: fit-content;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+/* RIGHT SIDE (The Stack) */
+.hero-right {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* INDIVIDUAL CARD STYLE */
+.card {
+  position: absolute;
+  width: 320px;
+  height: 420px;
+  background: #1a1a1a; /* Dark card base */
+  padding: 15px 15px 60px 15px; /* Space for label at bottom */
+  border-radius: 8px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.6s ease;
+  cursor: pointer;
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+  filter: grayscale(20%);
+}
+
+.card .label {
+  position: absolute;
+  bottom: 15px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  color: #ddd;
+}
+
+/* SHUFFLE ANIMATION (When a card leaves) */
+.card.exit {
+  transform: translate(150%, -20%) rotate(25deg) scale(0.8) !important;
+  opacity: 0;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .hero { flex-direction: column; }
+  .hero-left { padding: 40px; text-align: center; align-items: center; }
+  .hero-left h1 { font-size: 40px; }
+  .hero-right { height: 60vh; }
+  .card { width: 260px; height: 340px; }
+}
+</style>
+</head>
+
+<body>
+
+<section class="hero">
+  <div class="hero-left">
+    <h1>Explore the <br> Unknown</h1>
+    <p>Journey through the most breathtaking landscapes on earth.</p>
+    <a href="#" class="btn">View Gallery</a>
+  </div>
+
+  <div class="hero-right" id="stack">
+    <!-- Cards are generated/managed via JS for easier rotation handling -->
+    <div class="card" data-label="Canada">
+      <img src="https://images.pexels.com/photos/36959044/pexels-photo-36959044.jpeg">
+      <div class="label">Canada</div>
+    </div>
+    <div class="card" data-label="New Zealand">
+      <img src="https://images.pexels.com/photos/31485845/pexels-photo-31485845.jpeg">
+      <div class="label">New Zealand</div>
+    </div>
+    <div class="card" data-label="Japan">
+      <img src="https://images.pexels.com/photos/36873706/pexels-photo-36873706.jpeg">
+      <div class="label">Japan</div>
+    </div>
+    <div class="card" data-label="Norway">
+      <img src="https://images.pexels.com/photos/35890516/pexels-photo-35890516.jpeg">
+      <div class="label">Norway</div>
+    </div>
+  </div>
+</section>
+
+<script>
+const stack = document.getElementById("stack");
+const cards = Array.from(stack.querySelectorAll(".card"));
+
+// Initial scattered positions
+function layoutCards() {
+  cards.forEach((card, index) => {
+    // Reverse index so the first items in HTML are on top
+    const zIndex = cards.length - index;
+    card.style.zIndex = zIndex;
+
+    // Apply random-looking rotation and slight offset
+    const rotate = (index % 2 === 0 ? 1 : -1) * (index * 3 + 2);
+    const xOffset = index * -5;
+    const yOffset = index * -5;
+    
+    card.style.transform = `translate(${xOffset}px, ${yOffset}px) rotate(${rotate}deg)`;
+  });
+}
+
+function shuffle() {
+  const topCard = cards.shift(); // Remove the top card from array
+  
+  // 1. Add exit class for animation
+  topCard.classList.add("exit");
+
+  // 2. Wait for animation, then move to bottom of stack
+  setTimeout(() => {
+    topCard.classList.remove("exit");
+    stack.appendChild(topCard); // Move element to bottom in DOM
+    cards.push(topCard); // Add back to end of array
+    layoutCards(); // Re-calculate z-index and rotation
+  }, 600);
+}
+
+// Start the cycle
+layoutCards();
+setInterval(shuffle, 3500);
+
+// Also shuffle on click
+stack.addEventListener("click", shuffle);
+</script>
+
+</body>
+</html>
+
+
+
+
+<!-- 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Editorial Stacked Hero</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg-color: #121418;
+  --card-white: #ffffff;
+  --text-main: #f5f5f5;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg-color);
+  color: var(--text-main);
+  font-family: 'Inter', sans-serif;
+}
+
+.hero {
+  height: 100vh;
+  display: flex;
+  overflow: hidden;
+}
+
+/* LEFT SIDE */
+.hero-left {
+  flex: 0.8;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px;
+  z-index: 100;
+}
+
+.hero-left h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3rem, 5vw, 5rem);
+  line-height: 1.1;
+  margin-bottom: 20px;
+  font-style: italic;
+}
+
+.btn {
+  display: inline-block;
+  padding: 18px 40px;
+  border: 1px solid rgba(255,255,255,0.3);
+  color: #fff;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 0.8rem;
+  transition: 0.4s;
+  width: fit-content;
+}
+
+.btn:hover {
+  background: #fff;
+  color: #000;
+}
+
+/* RIGHT SIDE (The Stack) */
+.hero-right {
+  flex: 1.2;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* CARD STYLING */
+.card {
+  position: absolute;
+  width: 320px;
+  height: 420px;
+  background: var(--card-white);
+  padding: 12px 12px 55px 12px; /* Polaroid bottom heavy */
+  border-radius: 2px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  /* Use a very smooth cubic-bezier for the "soothing" feel */
+  transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1), opacity 1s ease, filter 1s ease;
+  cursor: pointer;
+  pointer-events: none;
+}
+
+.card.active-top { pointer-events: auto; }
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: sepia(5%);
+}
+
+.card .label {
+  position: absolute;
+  bottom: 15px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  font-family: 'Playfair Display', serif;
+}
+
+/* EXIT ANIMATION: Drift out with Blur */
+.card.exit {
+  transform: translate(120%, -20%) rotate(25deg) scale(0.8) !important;
+  filter: blur(10px);
+  opacity: 0;
+}
+
+@media (max-width: 768px) {
+  .hero { flex-direction: column; }
+  .hero-left { padding: 40px; text-align: center; align-items: center; }
+  .hero-right { height: 60vh; }
+  .card { width: 250px; height: 330px; }
+}
+</style>
+</head>
+
+<body>
+
+<section class="hero">
+  <div class="hero-left">
+    <h1>Land of <br> <i>Serenity</i></h1>
+    <p>Journey through breathtaking stories and poetic visuals.</p>
+    <a href="#" class="btn">Explore More</a>
+  </div>
+
+  <div class="hero-right" id="stack">
+    <div class="card" data-label="Canada">
+      <img src="https://images.pexels.com/photos/36959044/pexels-photo-36959044.jpeg">
+      <div class="label">Canada</div>
+    </div>
+    <div class="card" data-label="New Zealand">
+      <img src="https://images.pexels.com/photos/31485845/pexels-photo-31485845.jpeg">
+      <div class="label">New Zealand</div>
+    </div>
+    <div class="card" data-label="Japan">
+      <img src="https://images.pexels.com/photos/36873706/pexels-photo-36873706.jpeg">
+      <div class="label">Japan</div>
+    </div>
+    <div class="card" data-label="Norway">
+      <img src="https://images.pexels.com/photos/35890516/pexels-photo-35890516.jpeg">
+      <div class="label">Norway</div>
+    </div>
+  </div>
+</section>
+
+<script>
+const stack = document.getElementById("stack");
+let cards = Array.from(stack.querySelectorAll(".card"));
+
+function layoutCards() {
+  cards.forEach((card, index) => {
+    card.classList.remove('active-top');
+    
+    // We only want the first 3 to be fanned out prominently
+    const zIndex = cards.length - index;
+    card.style.zIndex = zIndex;
+
+    if (index === 0) {
+      // Top Card: Perfectly Centered or slightly tilted
+      card.style.transform = `translate(0, 0) rotate(0deg) scale(1)`;
+      card.style.opacity = "1";
+      card.classList.add('active-top');
+      card.style.filter = "blur(0px)";
+    } else if (index === 1) {
+      // Second Card: Peeking out to the right
+      card.style.transform = `translate(15%, 5%) rotate(8deg) scale(0.95)`;
+      card.style.opacity = "0.9";
+      card.style.filter = "blur(1px)";
+    } else if (index === 2) {
+      // Third Card: Peeking out to the left
+      card.style.transform = `translate(-15%, 2%) rotate(-12deg) scale(0.9)`;
+      card.style.opacity = "0.7";
+      card.style.filter = "blur(2px)";
+    } else {
+      // Remaining cards: Hidden behind the stack
+      card.style.transform = `translate(0, 0) rotate(0deg) scale(0.8)`;
+      card.style.opacity = "0";
+    }
+  });
+}
+
+function shuffle() {
+  const topCard = cards[0];
+  
+  // 1. Trigger the drift-out
+  topCard.classList.add("exit");
+
+  // 2. After transition, move to bottom and reset
+  setTimeout(() => {
+    topCard.classList.remove("exit");
+    stack.appendChild(topCard);
+    
+    // Rotate the array
+    cards.push(cards.shift());
+    
+    layoutCards();
+  }, 1000); // Increased time for a slower, more soothing transition
+}
+
+// Initial Layout
+layoutCards();
+
+// Auto-shuffle every 4 seconds
+setInterval(shuffle, 4500);
+
+// Shuffle on click
+stack.addEventListener("click", () => {
+  // Prevent double-clicking during animation
+  if (!cards[0].classList.contains("exit")) shuffle();
+});
+</script>
+
+</body>
+</html>
+
+-->
